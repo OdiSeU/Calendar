@@ -1,0 +1,37 @@
+@charset "utf-8";
+
+html {
+  --top-bar-container-height : 50px;
+  --left-bar-container-width : 300px;
+  --right-bar-container-width : 400px;
+}
+
+html, body {
+  margin : 0;
+  height : 100%;
+}
+
+#top-bar-container {
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+  height: var(--top-bar-container-height);
+}
+
+#left-bar-container {
+  border-right: 1px solid #ddd;
+  width: var(--left-bar-container-width);
+  height: calc(100% - var(--top-bar-container-height) - 1px);
+  float: left;
+}
+
+#right-bar-container {
+  border-left: 1px solid #ddd;
+  width: var(--right-bar-container-width);
+  height: calc(100% - var(--top-bar-container-height) - 1px);
+  float: right;
+}
+
+#calendar-container {
+  width : calc(100% - var(--left-bar-container-width) - var(--right-bar-container-width) - 2px);
+  height: calc(100% - var(--top-bar-container-height) - 1px);
+}

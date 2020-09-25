@@ -2,13 +2,31 @@
 
 html {
   --top-bar-container-height : 50px;
-  --left-bar-container-width : 300px;
-  --right-bar-container-width : 400px;
+  --left-bar-container-width : 220px;
+  --right-bar-container-width : 300px;
+  --resize-bar-width : 5px;
 }
 
 html, body {
   margin : 0;
   height : 100%;
+}
+
+.resize-bar {
+  background-color: transparent;
+  width: var(--resize-bar-width);
+  height: 100%;
+  cursor: col-resize;
+}
+
+.resize-bar:hover {
+  background-color: #ccc;
+  transition: 0.2s;
+}
+
+.resize-bar:active {
+  background-color: #aaf;
+  transition: 0s;
 }
 
 #top-bar-container {
@@ -24,11 +42,21 @@ html, body {
   float: left;
 }
 
+#left-bar-container .resize-bar {
+  border-radius:var(--top-bar-container-height);
+  float: right;
+}
+
 #right-bar-container {
   border-left: 1px solid #ddd;
   width: var(--right-bar-container-width);
   height: calc(100% - var(--top-bar-container-height) - 1px);
   float: right;
+}
+
+#right-bar-container .resize-bar {
+  border-radius:var(--top-bar-container-height);
+  float: left;
 }
 
 #calendar-container {

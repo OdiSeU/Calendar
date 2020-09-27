@@ -1,3 +1,3 @@
-var Calendar = {
-  
+const Calendar = {
+
 }

@@ -22,15 +22,14 @@ Date.prototype.getDays = function(template = 'e2'){
   return days[template[0]].map((item)=>item.slice(0, length));
 };
 
-Date.prototype.toTemplate = function(rule = this.template) {
-  this.template = rule || 'YYYY-MM-DD Ae2 hh:mm:ss';
-  this.string = this.template;
+Date.prototype.setTemplate = function(rule = this.template) {
+  this.templateString = this.template = rule || 'YYYY-MM-DD Ae2 hh:mm:ss';
 
-  function replace(expArr, value) {
+  let replace = (expArr, value)=>{
     for(i in expArr) {
-      if(this.string.search(RegExp(expArr[i])) != - 1) {
-        value = ('0'+value).slice(-expArr[i].length);
-        this.string = this.string.replace(expArr[i], value);
+      if(this.templateString.search(RegExp(expArr[i])) != - 1) {
+        if(expArr[i].length != 1) value = ('0'+value).slice(-expArr[i].length);
+        this.templateString = this.templateString.replace(expArr[i], value);
         return value;
       }
     }
@@ -40,23 +39,24 @@ Date.prototype.toTemplate = function(rule = this.template) {
   this.month = replace(['MM', 'M'], 1 + this.getMonth());
   this.date = replace(['DD', 'D'], this.getDate());
   this.day = (()=>{
-    let idx = this.string.indexOf('A');
+    let idx = this.templateString.indexOf('A');
     if(idx != -1) {
-      let a = this.string.slice(idx+1, idx+3);
+      let a = this.templateString.slice(idx+1, idx+3);
       this.days = this.getDays(a);
-      return replace('A'+a, this.days[this.getDay()]);
+      this.templateString = this.templateString.replace('A'+a, this.days[this.getDay()]);
+      return this.days[this.getDay()];
     }
     else return '';
   })();
 
   this.hour = (()=>{
-    if(this.string.indexof('H') != -1) return replace(['HH','H'], this.getHours());
-    if(this.string.indexof('h') != -1) return replace(['hh','h'], (this.getHours()+11)%12+1);
-  })
+    if(this.templateString.indexOf('H') != -1) return replace(['HH','H'], this.getHours());
+    if(this.templateString.indexOf('h') != -1) return replace(['hh','h'], (this.getHours()+11)%12+1);
+  })();
   this.minute = replace(['mm','m'], this.getMinutes());
   this.second = replace(['ss','s'], this.getSeconds());
 
-  return this.string;
+  return this.templateString;
 }
 
 

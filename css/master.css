@@ -63,3 +63,11 @@ html, body {
   width : calc(100% - var(--left-bar-container-width) - var(--right-bar-container-width) - 2px);
   height: calc(100% - var(--top-bar-container-height) - 1px);
 }
+
+#clock {
+  position: relative;
+  top: 12px;
+  height: 100%;
+  float: right;
+  margin-right: 20px;
+}

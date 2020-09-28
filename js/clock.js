@@ -1,22 +1,25 @@
-const Clock = (function() {
-  let clock = {
-    year : 0,
-    month : 0,
-    date : 0,
-    day : 0,
-    hour : 0,
-    minute : 0,
-    second : 0,
-    update : function() {
-      let date = new Date();
-      this.year = date.getYear();
-      this.month = date.getMonth() + 1;
-      this.date = date.getDate();
-      this.day =  0;
-    },
-    toString : function() {
+const Clock = function(target){
+  this.template = 'YYYY.MM.DD[Ae1] HH:mm:ss',
+  this.date = new Date();
+  this.target = target;
+  this.isTick = false;
 
-    }
+  this.start = function() {
+    this.isTick = true;
+    this.tick();
+  };
+  this.tick = function() {
+    if(!this.isTick) return;
+    this.date = new Date();
+    this.target.innerText = this.date.setTemplate(this.template);
+    setTimeout(()=>{this.tick()}, 1000-this.date.getMilliseconds());
+  };
+  this.stop = function() {
+    this.isTick = false;
+  };
+
+  this.constructor = function(target) {
+    if(target == undefined) throw 'Clock Error';
+    this.start();
   }
-  return;
-})();
+};

@@ -12,4 +12,7 @@ window.onload = function() {
       this.parentNode.style.width = (e.x + this.offsetWidth/2) + 'px';
     }
   }
+
+  clock = new Clock(document.getElementById('clock'));
+  clock.start();
 }

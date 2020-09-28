@@ -26,60 +26,35 @@ Date.prototype.toTemplate = function(rule = this.template) {
   this.template = rule || 'YYYY-MM-DD Ae2 hh:mm:ss';
   this.string = this.template;
 
-  this.year = (()=>{
-    let y = `${1900 + this.getYear()}`;
-    if(this.template.search(/YYYY/) != -1) {
-      this.string = this.string.replace('YYYY', y);
-      return y;
+  function replace(expArr, value) {
+    for(i in expArr) {
+      if(this.string.search(RegExp(expArr[i])) != - 1) {
+        value = ('0'+value).slice(-expArr[i].length);
+        this.string = this.string.replace(expArr[i], value);
+        return value;
+      }
     }
-    else if(this.template.search(/YY/) != - 1) {
-      y = y.slice(-2);
-      this.string = this.string.replace('YY', y);
-      return y;
-    }
-    else return '';
-  })();
-
-  this.month = (()=>{
-    let m = 1 + this.getMonth();
-    if(this.template.search(/MM/) != -1) {
-      m = m > 9 ? m.toString() : `0${m}`;
-      this.string = this.string.replace('MM',m);
-      return m;
-    }
-    else if(this.template.search(/M/) != - 1) {
-      m = m.toString();
-      this.string = this.string.replace('M',m);
-      return m;
-    }
-    else return '';
-  })();
-
-  this.date = (()=>{
-    let d = this.getDate();
-    if(this.template.search(/DD/) != -1) {
-      d = d > 9 ? d.toString() : `0${d}`;
-      this.string = this.string.replace('DD',d);
-      return d;
-    }
-    else if(this.template.search(/D/) != - 1) {
-      d = d.toString();
-      this.string = this.string.replace('D',d);
-      return d;
-    }
-    else return '';
-  })();
-
+    return '';
+  }
+  this.year = replace(['YYYY', 'YY'], 1900 + this.getYear());
+  this.month = replace(['MM', 'M'], 1 + this.getMonth());
+  this.date = replace(['DD', 'D'], this.getDate());
   this.day = (()=>{
-    let idx = this.template.indexOf('A');
+    let idx = this.string.indexOf('A');
     if(idx != -1) {
-      let a = this.template.slice(idx+1, idx+3);
+      let a = this.string.slice(idx+1, idx+3);
       this.days = this.getDays(a);
-      this.string = this.string.replace('A'+a,this.days[this.getDay()]);
-      return this.days[this.getDay()];
+      return replace('A'+a, this.days[this.getDay()]);
     }
     else return '';
   })();
+
+  this.hour = (()=>{
+    if(this.string.indexof('H') != -1) return replace(['HH','H'], this.getHours());
+    if(this.string.indexof('h') != -1) return replace(['hh','h'], (this.getHours()+11)%12+1);
+  })
+  this.minute = replace(['mm','m'], this.getMinutes());
+  this.second = replace(['ss','s'], this.getSeconds());
 
   return this.string;
 }

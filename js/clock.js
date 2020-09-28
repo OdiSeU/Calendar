@@ -1,5 +1,5 @@
-const Clock = function(target){
-  this.template = 'YYYY.MM.DD[Ae1] HH:mm:ss',
+const Clock = function(target, rule = 'YYYY.MM.DD[Ae1] HH:mm:ss'){
+  this.template = rule;
   this.date = new Date();
   this.target = target;
   this.isTick = false;
@@ -16,6 +16,10 @@ const Clock = function(target){
   };
   this.stop = function() {
     this.isTick = false;
+  };
+  this.setTemplate = function(rule) {
+    this.template = rule;
+    this.date.setTemplate(rule);
   };
 
   this.constructor = function(target) {

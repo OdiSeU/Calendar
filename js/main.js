@@ -7,12 +7,6 @@ window.onload = function() {
   let leftResizeBar = resizeBars[0];
   let rightResizeBar = resizeBars[1];
 
-  leftResizeBar.onmousemove = function(e) {
-    if(e.buttons == 1) {
-      this.parentNode.style.width = (e.x + this.offsetWidth/2) + 'px';
-    }
-  }
-
-  clock = new Clock(document.getElementById('clock'));
-  clock.start();
+  topBar.clock = new Clock(document.getElementById('clock'));
+  topBar.clock.start();
 }

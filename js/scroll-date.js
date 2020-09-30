@@ -11,16 +11,13 @@ const ScrollDate = function(parent) {
     parent.append(this.element);
   }
 
+}
+const ScrollDateBox = function(parent) {
+  this.element = document.createElement('div');
 
-
-
-  const ScrollDateBox = function(parent) {
-    this.element = document.createElement('div');
-
-    this.constructor = function(parent) {
-      this.element.style.display = 'inline';
-      this.element.style.overflow = 'hidden';
-      this.element.style.height = '100%';
-    }
+  this.constructor = function(parent) {
+    this.element.style.display = 'inline';
+    this.element.style.overflow = 'hidden';
+    this.element.style.height = '100%';
   }
 }

@@ -84,18 +84,3 @@ html, body {
   overflow-y: scroll;
   display: inline-block;
 }
-
-.scroll-box:hover {
-  height : 40px;
-  transform: translate(0,-10px);
-
-}
-.scroll-box::-webkit-scrollbar {
-  display: none;
-}
-
-.scroll-box p {
-  position: relative;
-  margin: 0px;
-  transform: translate(0, -1em);
-}
